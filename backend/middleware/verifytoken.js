@@ -22,6 +22,6 @@ export const verifytoken = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log("error in verifytoken ", error.message);
+    "error in verifytoken ", error.message;
   }
 };

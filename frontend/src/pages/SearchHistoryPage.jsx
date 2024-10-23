@@ -43,7 +43,6 @@ function SearchHistoryPage() {
       );
       toast.success("deteled succesfully");
     } catch (error) {
-      console.log(error);
       toast("an error found", {
         icon: "😣",
         style: {

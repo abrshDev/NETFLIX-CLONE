@@ -45,7 +45,7 @@ export const useAuthUser = create((set) => ({
       set({ user: response.data.user, ischeckingauth: false });
     } catch (error) {
       set({ user: null, ischeckingauth: false });
-      console.log(error);
+
       //error
     }
   },
