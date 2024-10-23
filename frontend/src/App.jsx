@@ -5,7 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import Footer from "./components/footer";
 import { Toaster } from "react-hot-toast";
-import WatchPage from "./pages/watchPage";
+import WatchPage from "./pages/WatchPage";
 import { useAuthUser } from "./store/AuthUser";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
