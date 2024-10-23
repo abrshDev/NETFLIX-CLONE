@@ -28,9 +28,12 @@ export const signup = async (req, res) => {
         .json({ success: false, error: "email already taken" });
     }
     if (password.length < 6) {
-      return res.status(400).json("password length cannot be less than 6");
+      return res.status(400).json({
+        success: false,
+        error: "password length cannot be less than 6",
+      });
     }
-    const profilepics = ["/avatar1.png", "/avatar3.png", "/avatar3.png"];
+    const profilepics = ["/avatar1.png", "/avatar2.png", "/avatar3.png"];
     const image = profilepics[Math.floor(Math.random() * profilepics.length)];
     const salt = await bcrypt.genSalt(10);
     const hashpassword = await bcrypt.hash(password, salt);
@@ -112,4 +115,19 @@ export const logout = async (req, res) => {
       .json({ success: false, error: "internal server error" });
   }
 };
-export const me = async (req, res) => {};
+export const authcheck = async (req, res) => {
+  const userid = req.user._id;
+
+  try {
+    const user = await User.findById(userid);
+    if (!user) {
+      return res.status(404).json({ success: false, error: "user not found" });
+    }
+    return res.status(200).json({ success: true, user: user });
+  } catch (error) {
+    console.log("error in authcheck ", error.message);
+    return res
+      .status(500)
+      .json({ success: false, error: "internal server error" });
+  }
+};

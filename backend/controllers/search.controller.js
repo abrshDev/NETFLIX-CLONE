@@ -3,7 +3,6 @@ import { fetchfromtmdb } from "../services/tmdb.service.js";
 
 export const personsearch = async (req, res) => {
   const { query } = req.params;
-  const userid = req.user._id;
 
   try {
     const data = await fetchfromtmdb(
@@ -12,7 +11,7 @@ export const personsearch = async (req, res) => {
     if (data.results.length === 0) {
       return res.status(404).send(null);
     }
-    await User.findByIdAndUpdate(userid, {
+    await User.findByIdAndUpdate(req.user._id, {
       $push: {
         searchhistory: {
           id: data.results[0].id,
@@ -40,7 +39,7 @@ export const moviesearch = async (req, res) => {
     if (data.results.length === 0) {
       return res.status(404).send(null);
     }
-    await User.findByIdAndUpdate(userid, {
+    await User.findByIdAndUpdate(req.user._id, {
       $push: {
         searchhistory: {
           id: data.results[0].id,
@@ -68,7 +67,7 @@ export const tvsearch = async (req, res) => {
     if (data.results.length === 0) {
       return res.status(404).send(null);
     }
-    await User.findByIdAndUpdate(userid, {
+    await User.findByIdAndUpdate(req.user._id, {
       $push: {
         searchhistory: {
           id: data.results[0].id,
@@ -90,7 +89,7 @@ export const getsearchhistory = async (req, res) => {
   const user = await User.findById(userid).select("-password");
 
   try {
-    return res.status(200).json({ success: true, content: user.searchhistory });
+    return res.status(200).json({ success: true, history: user.searchhistory });
   } catch (error) {
     console.log("error in searchhistory", error.message);
     return res.status(500).json("internal server error");
